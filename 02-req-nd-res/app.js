@@ -13,6 +13,10 @@ const server = http.createServer((req, res) => {
   } else {
     res.setHeader("Content-Type", "text/html");
     res.write("<html>");
+    res.write("<head><title>Not Found</title></head>");
+    res.write("<body><h1>Page Not Found</h1></body>");
+    res.write("</html>");
+    return res.end();
   }
 });
 
