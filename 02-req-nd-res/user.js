@@ -1,4 +1,5 @@
 const http = require("http");
+const fs = require("fs");
 
 const server = http.createServer((req, res) => {
   console.log(req.url, req.method, req.headers);
@@ -22,6 +23,11 @@ const server = http.createServer((req, res) => {
     res.write("</form>");
     res.write("</body>");
     res.write("</html>");
+    return res.end();
+  } else if (req.url === "/create-user" && req.method === "POST") {
+    fs.writeFileSync("user.txt", "Shamuoon Haider");
+    res.statusCode = 302;
+    res.setHeader("Location", "/");
     return res.end();
   } else {
     res.setHeader("Content-Type", "text/html");
