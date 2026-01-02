@@ -33,19 +33,16 @@ const requestHandler = (req, res) => {
       console.log(parseBody);
 
       const params = new URLSearchParams(parseBody);
-      // const bodyObj = {};
-      // for (const [key, value] of params.entries()) {
-      //   bodyObj[key] = value;
-      // }
 
       const bodyObj = Object.fromEntries(params);
       console.log(bodyObj);
-      fs.writeFileSync("user.txt", JSON.stringify(bodyObj));
+      fs.writeFile("user.txt", JSON.stringify(bodyObj), (error) => {
+        console.log("data written successfully" || error);
+        res.statusCode = 302;
+        res.setHeader("Location", "/");
+        return res.end();
+      });
     });
-
-    res.statusCode = 302;
-    res.setHeader("Location", "/");
-    return res.end();
   } else {
     res.setHeader("Content-Type", "text/html");
     res.write("<html>");
